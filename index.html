@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>PROMPTURE — Fashion Prompt Atelier</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d1f1a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <!-- Top bar -->
+  <header id="topbar">
+    <div class="brand">
+      <button id="menuBtn" class="icon-btn" title="Menu">☰</button>
+      <div class="logo">P</div>
+      <div class="brand-text">
+        <div class="brand-name">PROMPTURE</div>
+        <div class="brand-sub" data-i18n="subtitle">ဖက်ရှင် Prompt အလုပ်ရုံ</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button id="langToggle" class="pill-btn" title="Language">မြန်မာ | EN</button>
+      <button id="settingsBtn" class="icon-btn" title="Settings">⚙</button>
+    </div>
+  </header>
+
+  <!-- Stage stepper -->
+  <nav id="stepper">
+    <div class="step active" data-stage="upload"><span class="step-dot">1</span><span class="step-label" data-i18n="st_upload">ပုံတင်</span></div>
+    <div class="step" data-stage="analyze"><span class="step-dot">2</span><span class="step-label" data-i18n="st_analyze">စစ်ဆေး</span></div>
+    <div class="step" data-stage="propose"><span class="step-dot">3</span><span class="step-label" data-i18n="st_propose">အကြံပြု</span></div>
+    <div class="step" data-stage="build"><span class="step-dot">4</span><span class="step-label" data-i18n="st_build">ဆောက်</span></div>
+  </nav>
+
+  <!-- Main layout -->
+  <div id="main">
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div class="side-section">
+        <h3 data-i18n="refs">Reference ပုံများ</h3>
+        <p class="tiny muted" data-i18n="refs_hint">အမျိုးအစားအလိုက် ခွဲတင်ပါ</p>
+        <div id="slotList"></div>
+      </div>
+      <div class="side-section">
+        <h3 data-i18n="selection">ရွေးချယ်မှု</h3>
+        <div id="selectionState">
+          <div class="sel-row"><span data-i18n="sel_loc">နေရာ:</span> <b id="selLoc">—</b></div>
+          <div class="sel-row"><span data-i18n="sel_mk">မိတ်ကပ်:</span> <b id="selMk">—</b></div>
+        </div>
+      </div>
+      <div class="side-section">
+        <h3 data-i18n="commands">အသင့်သုံး command များ</h3>
+        <div id="cmdGrid" class="cmd-grid"></div>
+      </div>
+      <button id="newSessionBtn" class="ghost-btn small" data-i18n="new_session">အသစ်စ</button>
+    </aside>
+    <div id="sideScrim"></div>
+
+    <!-- Chat column -->
+    <section id="chatCol">
+      <div id="thread"></div>
+      <div id="chipsRow"></div>
+      <div id="composer">
+        <button id="attachBtn" class="icon-btn" title="References">🖼</button>
+        <textarea id="msgInput" rows="3" data-i18n-ph="placeholder" placeholder="စာရိုက်ပါ (သို့) command နှိပ်ပါ…"></textarea>
+        <button id="sendBtn" class="gold-btn" data-i18n="send">ပို့</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Settings modal -->
+<div id="settingsModal" class="modal hidden">
+  <div class="modal-card">
+    <h2 data-i18n="settings">ဆက်တင်</h2>
+    <label data-i18n="api_key">Gemini API key</label>
+    <div class="key-row">
+      <input type="password" id="apiKeyInput" placeholder="AQ.…">
+      <button id="showKeyBtn" class="icon-btn">👁</button>
+    </div>
+    <button id="testKeyBtn" class="ghost-btn small" data-i18n="test_key">Key စမ်း</button>
+    <span id="keyStatus" class="muted"></span>
+    <label data-i18n="model">Model</label>
+    <select id="modelSelect">
+      <option value="gemini-3.8-flash">gemini-3.8-flash</option>
+      <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview</option>
+    </select>
+    <label data-i18n="language">ဘာသာစကား</label>
+    <select id="langSelect">
+      <option value="mm">မြန်မာ</option>
+      <option value="en">English</option>
+    </select>
+    <div class="modal-actions">
+      <button id="clearChatBtn" class="ghost-btn small danger" data-i18n="clear_chat">Chat ရှင်း</button>
+      <button id="closeSettingsBtn" class="gold-btn small" data-i18n="done">ပြီးပြီ</button>
+    </div>
+    <p class="muted tiny" data-i18n="key_note">Key က ဒီ browser ထဲမှာပဲ သိမ်းထားတယ် — Google ဆီကိုပဲ သွားတယ်။</p>
+  </div>
+</div>
+
+<!-- Onboarding -->
+<div id="onboard" class="modal hidden">
+  <div class="modal-card">
+    <div class="logo big">P</div>
+    <h2>PROMPTURE</h2>
+    <ol id="onboardSteps"></ol>
+    <button id="onboardGo" class="gold-btn" data-i18n="start">စမယ်</button>
+  </div>
+</div>
+
+<script src="knowledge.js" onerror="window.__kfailed=true"></script>
+<script src="app.js" onerror="window.__appjs_failed=true"></script>
+<script>
+/* Boot self-check: diagnose exactly why the app didn't start */
+setTimeout(function(){
+  if(window.__prompture_booted) return;
+  var th = document.getElementById('thread');
+  if(!th || th.children.length) return;
+  var mm, en;
+  if(window.__appjs_failed){
+    mm = 'app.js ဖိုင် load မဖြစ်ဘူး — folder ထဲမှာ app.js ရှိ/မရှိ စစ်ပါ။ Antivirus က block ထားရင် allow လုပ်ပါ။';
+    en = 'app.js failed to load — check the file exists in the folder (antivirus may have blocked it — allow it).';
+  } else if(window.__kfailed){
+    mm = 'knowledge.js ဖိုင် load မဖြစ်ဘူး — folder ထဲမှာ ရှိ/မရှိ စစ်ပါ။';
+    en = 'knowledge.js failed to load — check the file exists in the folder.';
+  } else {
+    mm = 'app.js စတင်နေတုန်း ရပ်သွားတယ်။';
+    en = 'app.js crashed during startup.';
+  }
+  th.innerHTML = '<div class="msg assistant">⚠️ <b>App မစတင်နိုင်ဘူး</b><br>'+mm+'<br><br>⚠️ <b>App failed to start</b><br>'+en+'</div>';
+}, 1200);
+</script>
+</body>
+</html>
