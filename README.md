@@ -1,4 +1,4 @@
-# PROMPTURE Web App v1.1 — တပ်ဆင်နည်း 🌸
+# PROMPTURE Web App v1.3 — တပ်ဆင်နည်း 🌸
 
 ## အမြန်စတင်နည်း (၃ ဆင့်)
 
@@ -39,3 +39,11 @@
 - ဒီ app က **prompt ပဲ ရေးတယ်** — ပုံမထုတ်ဘူး (PROMPTURE STUDIO က ပုံထုတ်တာ)။
 - Internet လိုတယ် (Gemini API ခေါ်ဖို့)။
 - API သုံးတာ Google ရဲ့ free tier / billing အတိုင်း ကုန်ကျမယ်။
+
+## v1.2 အသစ် ✨
+- 🌐 Language toggle ကို topbar ကနေ ဖြုတ် → **Settings ထဲမှာပဲ** ထားတယ်
+- 🌓 **Appearance**: Day / Night / System — Settings မှာ ရွေး (ရွေးထားတာ မှတ်ထားပေးမယ်)
+- ✍️ Composer အသစ်: Send + ပုံထည့်တဲ့ button **သေးသေး**လေးတွေ text box **ထဲမှာ**, box အမြင့် အတိုင်း, အလျား **အပြည့်**
+
+## v1.3 အသစ် ✨
+- 🌸 **PROMPTURE icon** ထည့်ပြီးပြီ — browser bookmark / tab / phone home screen မှာ icon လှလှ ပေါ်မယ်

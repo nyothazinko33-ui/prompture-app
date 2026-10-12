@@ -24,6 +24,8 @@ const STR = {
   settings:{mm:'ဆက်တင်',en:'Settings'}, api_key:{mm:'Gemini API key',en:'Gemini API key'},
   test_key:{mm:'Key စမ်း',en:'Test key'}, model:{mm:'Model',en:'Model'},
   language:{mm:'ဘာသာစကား',en:'Language'}, clear_chat:{mm:'Chat ရှင်း',en:'Clear chat'},
+  appearance:{mm:'အသွင်အပြင်',en:'Appearance'},
+  theme_day:{mm:'☀️ နေ့',en:'☀️ Day'}, theme_night:{mm:'🌙 ည',en:'🌙 Night'}, theme_system:{mm:'⚙️ System',en:'⚙️ System'},
   done:{mm:'ပြီးပြီ',en:'Done'},
   key_note:{mm:'Key က ဒီ browser ထဲမှာပဲ သိမ်းထားတယ် — Google ဆီကိုပဲ သွားတယ်။',en:'Your key stays in this browser only — it goes to Google alone.'},
   start:{mm:'စမယ်',en:'Start'},
@@ -82,6 +84,7 @@ const SLOT_DEFS = [
 /* ---------- State ---------- */
 const state = {
   lang: store.get('prompture_lang') || 'mm',
+  theme: store.get('prompture_theme') || 'night',
   apiKey: store.get('prompture_api_key') || '',
   model: VALID_MODELS.includes(store.get('prompture_model')) && !['gemini-2.5-flash','gemini-2.5-pro'].includes(store.get('prompture_model')) ? store.get('prompture_model') : 'gemini-3.8-flash',
   refSlots: {model:[], outfit:[], pose:[], makeup:[], location:[], furniture:[]},
@@ -397,9 +400,25 @@ function renderChips(){
 function applyLang(){
   document.querySelectorAll('[data-i18n]').forEach(el=>{ el.innerHTML = esc(t(el.dataset.i18n)); });
   document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ el.placeholder = t(el.dataset.i18nPh); });
-  $('langToggle').textContent = state.lang==='mm' ? 'မြန်မာ | EN' : 'EN | မြန်မာ';
   $('langSelect').value = state.lang;
+  const ts = $('themeSelect');
+  if(ts){
+    ts.options[0].textContent = t('theme_day');
+    ts.options[1].textContent = t('theme_night');
+    ts.options[2].textContent = t('theme_system');
+    ts.value = state.theme;
+  }
   renderChips(); renderSlots();
+}
+
+/* ---------- Theme (Day / Night / System) ---------- */
+function applyTheme(){
+  let eff = state.theme;
+  if(eff==='system' && window.matchMedia){
+    eff = window.matchMedia('(prefers-color-scheme: light)').matches ? 'day' : 'night';
+  }
+  document.body.dataset.theme = eff;
+  const ts = $('themeSelect'); if(ts) ts.value = state.theme;
 }
 
 /* ---------- Sidebar open/close ---------- */
@@ -416,6 +435,7 @@ function toggleSidebar(){
 function openSettings(){
   $('apiKeyInput').value = state.apiKey || '';
   $('modelSelect').value = state.model;
+  $('themeSelect').value = state.theme;
   $('settingsModal').classList.remove('hidden');
   if(state.apiKey) loadModels();
 }
@@ -489,8 +509,11 @@ function init(){
   const ta = $('msgInput');
   ta.addEventListener('input', ()=>{ ta.style.height='auto'; ta.style.height=Math.min(ta.scrollHeight,220)+'px'; });
   ta.addEventListener('keydown', e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); $('sendBtn').click(); } });
-  $('langToggle').onclick = ()=>{ state.lang = state.lang==='mm'?'en':'mm'; store.set('prompture_lang',state.lang); applyLang(); };
   $('langSelect').onchange = e=>{ state.lang = e.target.value; store.set('prompture_lang',state.lang); applyLang(); };
+  $('themeSelect').onchange = e=>{ state.theme = e.target.value; store.set('prompture_theme',state.theme); applyTheme(); };
+  if(window.matchMedia){
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', ()=>{ if(state.theme==='system') applyTheme(); });
+  }
   $('settingsBtn').onclick = openSettings;
   $('closeSettingsBtn').onclick = closeSettings;
   $('showKeyBtn').onclick = ()=>{ const i=$('apiKeyInput'); i.type = i.type==='password'?'text':'password'; };
@@ -514,6 +537,7 @@ function init(){
     };
   });
   applyLang();
+  applyTheme();
   if(window.innerWidth<=860) document.body.classList.remove('side-open');
   if(!store.get('prompture_seen')){
     const steps = [t('step1'), t('step2'), t('step3')];

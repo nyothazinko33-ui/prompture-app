@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>PROMPTURE — Fashion Prompt Atelier</title>
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0d1f1a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +26,6 @@
       </div>
     </div>
     <div class="top-actions">
-      <button id="langToggle" class="pill-btn" title="Language">မြန်မာ | EN</button>
       <button id="settingsBtn" class="icon-btn" title="Settings">⚙</button>
     </div>
   </header>
@@ -66,9 +67,13 @@
       <div id="thread"></div>
       <div id="chipsRow"></div>
       <div id="composer">
-        <button id="attachBtn" class="icon-btn" title="References">🖼</button>
-        <textarea id="msgInput" rows="3" data-i18n-ph="placeholder" placeholder="စာရိုက်ပါ (သို့) command နှိပ်ပါ…"></textarea>
-        <button id="sendBtn" class="gold-btn" data-i18n="send">ပို့</button>
+        <div class="composer-box">
+          <textarea id="msgInput" rows="3" data-i18n-ph="placeholder" placeholder="စာရိုက်ပါ (သို့) command နှိပ်ပါ…"></textarea>
+          <div class="composer-btns">
+            <button id="attachBtn" class="mini-btn" title="🖼️">🖼️</button>
+            <button id="sendBtn" class="mini-btn send" data-i18n="send">ပို့</button>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -94,6 +99,12 @@
     <select id="langSelect">
       <option value="mm">မြန်မာ</option>
       <option value="en">English</option>
+    </select>
+    <label data-i18n="appearance">အသွင်အပြင်</label>
+    <select id="themeSelect">
+      <option value="day">☀️ Day</option>
+      <option value="night">🌙 Night</option>
+      <option value="system">⚙️ System</option>
     </select>
     <div class="modal-actions">
       <button id="clearChatBtn" class="ghost-btn small danger" data-i18n="clear_chat">Chat ရှင်း</button>
