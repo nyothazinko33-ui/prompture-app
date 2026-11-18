@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>PROMPTURE — Maison d'Éditorial</title>
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#09090b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600&family=Noto+Sans+Myanmar:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <!-- Top bar -->
+  <header id="topbar">
+    <div class="brand">
+      <button id="menuBtn" class="icon-btn" title="Menu" aria-label="Menu">
+        <svg viewBox="0 0 24 24" class="svg-ico"><path d="M4 7h16M4 12h12M4 17h16"/></svg>
+      </button>
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 40 40" class="monogram">
+          <path d="M16 30V10h6.2c3.8 0 6.3 2.1 6.3 5.4s-2.5 5.4-6.3 5.4H16" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M9 28C5 18 14 7 25 10c7 2 10 9 5 15-4 5-14 6-20 1" fill="none" stroke="currentColor" stroke-width="1" opacity=".7"/>
+          <path d="M12 31L29 9" stroke="currentColor" stroke-width="1.15" stroke-linecap="round"/>
+          <circle cx="9.2" cy="21" r="1.4" fill="currentColor"/>
+          <circle cx="31.5" cy="22.5" r="1.4" fill="currentColor" opacity=".75"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-name">PROMPTURE</div>
+        <div class="brand-sub" data-i18n="subtitle">ဖက်ရှင် Prompt အလုပ်ရုံ</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button id="settingsBtn" class="icon-btn" title="Settings" aria-label="Settings">
+        <svg viewBox="0 0 24 24" class="svg-ico"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.85 1 1.51 1H21a2 2 0 1 1 0 4h-.09c-.66 0-1.25.4-1.51 1z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Editorial Stage Stepper -->
+  <nav id="stepper" aria-label="Workflow stages">
+    <div class="step active" data-stage="upload"><span class="step-dot">01</span><span class="step-label" data-i18n="st_upload">ပုံတင်</span></div>
+    <span class="step-line" aria-hidden="true"></span>
+    <div class="step" data-stage="analyze"><span class="step-dot">02</span><span class="step-label" data-i18n="st_analyze">စစ်ဆေး</span></div>
+    <span class="step-line" aria-hidden="true"></span>
+    <div class="step" data-stage="propose"><span class="step-dot">03</span><span class="step-label" data-i18n="st_propose">အကြံပြု</span></div>
+    <span class="step-line" aria-hidden="true"></span>
+    <div class="step" data-stage="build"><span class="step-dot">04</span><span class="step-label" data-i18n="st_build">ဆောက်</span></div>
+  </nav>
+
+  <!-- Main layout -->
+  <div id="main">
+    <!-- Atelier Moodboard Sidebar -->
+    <aside id="sidebar">
+      <!-- Active Model Switcher -->
+      <div class="side-section">
+        <div class="side-head">
+          <h3 data-i18n="active_models">Active Models</h3>
+          <span id="activeModelHint" class="micro-badge">001</span>
+        </div>
+        <div id="modelPills" class="model-pills">
+          <button type="button" class="mpill active" data-model="MODEL-001">001</button>
+          <button type="button" class="mpill" data-model="MODEL-002">002</button>
+          <button type="button" class="mpill" data-model="MODEL-003">003</button>
+        </div>
+      </div>
+
+      <!-- 2x3 Moodboard Grid -->
+      <div class="side-section">
+        <div class="side-head">
+          <h3 data-i18n="refs">Moodboard ပုံများ</h3>
+        </div>
+        <p class="tiny muted" data-i18n="refs_hint">အမျိုးအစားအလိုက် ခွဲတင်ပါ</p>
+        <div id="slotList" class="mood-grid"></div>
+      </div>
+
+      <!-- Curated Selection -->
+      <div class="side-section">
+        <h3 data-i18n="selection">ရွေးချယ်မှု</h3>
+        <div id="selectionState" class="sel-card">
+          <div class="sel-row"><span data-i18n="sel_loc">နေရာ:</span> <b id="selLoc">—</b></div>
+          <div class="sel-row"><span data-i18n="sel_mk">မိတ်ကပ်:</span> <b id="selMk">—</b></div>
+        </div>
+      </div>
+
+      <!-- Categorized Atelier Tools -->
+      <div class="side-section">
+        <h3 data-i18n="commands">Atelier Tools</h3>
+        <div id="cmdGroups" class="cmd-groups"></div>
+      </div>
+
+      <button id="newSessionBtn" class="ghost-btn small" data-i18n="new_session">အသစ်စ</button>
+    </aside>
+    <div id="sideScrim"></div>
+
+    <!-- Chat column -->
+    <section id="chatCol">
+      <div id="thread"></div>
+
+      <!-- Clean 5-button Primary Action Bar -->
+      <div id="primaryBar"></div>
+
+      <!-- Composer + Atelier Tools Popover -->
+      <div id="composer">
+        <div id="atelierPopover" class="popover hidden" role="dialog" aria-label="Atelier Tools"></div>
+        <div class="composer-box">
+          <textarea id="msgInput" rows="2" data-i18n-ph="placeholder" placeholder="စာရိုက်ပါ (သို့) command နှိပ်ပါ…"></textarea>
+          <div class="composer-footer">
+            <button type="button" id="toolsBtn" class="mini-btn tools-trigger" aria-expanded="false">
+              <svg viewBox="0 0 24 24" class="svg-ico sm"><path d="M12 3l1.8 4.8L18.5 9.5l-4.7 1.7L12 16l-1.8-4.8L5.5 9.5l4.7-1.7z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z"/></svg>
+              <span data-i18n="tools_btn">Atelier Tools</span>
+            </button>
+            <div class="composer-btns">
+              <button type="button" id="attachBtn" class="mini-btn" title="References" aria-label="Attach reference">
+                <svg viewBox="0 0 24 24" class="svg-ico sm"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 16l-5-4.5-4 3.5-3-2.5L3 18"/></svg>
+              </button>
+              <button type="button" id="sendBtn" class="mini-btn send" data-i18n="send">ပို့</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Settings modal -->
+<div id="settingsModal" class="modal hidden">
+  <div class="modal-card">
+    <div class="modal-monogram">P</div>
+    <h2 data-i18n="settings">ဆက်တင်</h2>
+    <label data-i18n="api_key">Gemini API key</label>
+    <div class="key-row">
+      <input type="password" id="apiKeyInput" placeholder="AQ.…">
+      <button id="showKeyBtn" class="icon-btn" aria-label="Show key">
+        <svg viewBox="0 0 24 24" class="svg-ico sm"><path d="M2 12s3.8-6.5 10-6.5S22 12 22 12s-3.8 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>
+      </button>
+    </div>
+    <button id="testKeyBtn" class="ghost-btn small" data-i18n="test_key">Key စမ်း</button>
+    <span id="keyStatus" class="muted tiny"></span>
+    <label data-i18n="model">Model</label>
+    <select id="modelSelect">
+      <option value="gemini-3.8-flash">gemini-3.8-flash</option>
+      <option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite</option>
+      <option value="gemini-3.6-flash">gemini-3.6-flash</option>
+      <option value="gemini-4-hydrogen">gemini-4-hydrogen</option>
+      <option value="gemini-4-argon">gemini-4-argon</option>
+      <option value="gemini-4-carbon">gemini-4-carbon</option>
+      <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview</option>
+    </select>
+    <label data-i18n="language">ဘာသာစကား</label>
+    <select id="langSelect">
+      <option value="mm">မြန်မာ</option>
+      <option value="en">English</option>
+    </select>
+    <label data-i18n="appearance">အသွင်အပြင်</label>
+    <select id="themeSelect">
+      <option value="day">Day — Silk Ivory</option>
+      <option value="night">Night — Noir Couture</option>
+      <option value="system">System</option>
+    </select>
+    <div class="modal-actions">
+      <button id="clearChatBtn" class="ghost-btn small danger" data-i18n="clear_chat">Chat ရှင်း</button>
+      <button id="closeSettingsBtn" class="gold-btn small" data-i18n="done">ပြီးပြီ</button>
+    </div>
+    <p class="muted tiny" data-i18n="key_note">Key က ဒီ browser ထဲမှာပဲ သိမ်းထားတယ် — Google ဆီကိုပဲ သွားတယ်။</p>
+  </div>
+</div>
+
+<!-- Onboarding -->
+<div id="onboard" class="modal hidden">
+  <div class="modal-card">
+    <div class="modal-monogram big">P</div>
+    <h2>PROMPTURE</h2>
+    <p class="tiny muted italic-serif">Maison d'Éditorial · Haute Couture Prompt Atelier</p>
+    <ol id="onboardSteps"></ol>
+    <button id="onboardGo" class="gold-btn" data-i18n="start">စမယ်</button>
+  </div>
+</div>
+
+<script src="knowledge.js" onerror="window.__kfailed=true"></script>
+<script src="app.js" onerror="window.__appjs_failed=true"></script>
+<script>
+/* Boot self-check: diagnose exactly why the app didn't start */
+setTimeout(function(){
+  if(window.__prompture_booted) return;
+  var th = document.getElementById('thread');
+  if(!th || th.children.length) return;
+  var mm, en;
+  if(window.__appjs_failed){
+    mm = 'app.js ဖိုင် load မဖြစ်ဘူး — folder ထဲမှာ app.js ရှိ/မရှိ စစ်ပါ။ Antivirus က block ထားရင် allow လုပ်ပါ။';
+    en = 'app.js failed to load — check the file exists in the folder (antivirus may have blocked it — allow it).';
+  } else if(window.__kfailed){
+    mm = 'knowledge.js ဖိုင် load မဖြစ်ဘူး — folder ထဲမှာ ရှိ/မရှိ စစ်ပါ။';
+    en = 'knowledge.js failed to load — check the file exists in the folder.';
+  } else {
+    mm = 'app.js စတင်နေတုန်း ရပ်သွားတယ်။';
+    en = 'app.js crashed during startup.';
+  }
+  th.innerHTML = '<div class="msg assistant">⚠️ <b>App မစတင်နိုင်ဘူး</b><br>'+mm+'<br><br>⚠️ <b>App failed to start</b><br>'+en+'</div>';
+}, 1200);
+</script>
+</body>
+</html>
